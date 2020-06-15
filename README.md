@@ -5,3 +5,4 @@ A simple expert system which recommends food menu based on user preferences.
     consult('main.pl').
     go.
     ('menu.nkb').
+    halt. to exit
