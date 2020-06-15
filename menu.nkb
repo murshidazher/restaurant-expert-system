@@ -1,0 +1,87 @@
+/* 
+Copyright (C) 2020  Murshid Azher
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  
+If not, see 
+<https://github.com/murshidazher/restaurant-expert-system/blob/master/LICENSE>
+*/
+
+% Module: menu.pl
+% --------
+%
+% This module contains the rules that constitutes the knowledge of
+% the expert system and the functionality to update Knowledge Base 
+
+/* hypotheses to be tested */ 
+
+hypothesize(nasi_lemak) :- nasi_lemak, !. 
+hypothesize(fried_rice) :- fried_rice, !. 
+hypothesize(dandan_noodle) :- dandan_noodle, !. 
+hypothesize(sichuan_noodle) :- sichuan_noodle, !. 
+hypothesize(kebab) :- kebab, !. 
+hypothesize(biryani) :- biryani, !. 
+hypothesize(falafel) :- falafel, !. 
+hypothesize(crossoint) :- crossoint, !. 
+hypothesize(baguette) :- baguette, !. 
+hypothesize(penne) :- penne, !. 
+hypothesize(not_in_my_memory). /* no diagnosis */ 
+
+/* menu food identification rules */ 
+nasi_lemak :- asian, rice, 
+                verify(has_sambal), 
+                verify(contain_coconutmilk). 
+fried_rice :- asian, rice, 
+            verify(has_varioustype), 
+            verify(must_fried). 
+dandan_noodle :- noodle, 
+               verify(no_soup), 
+               verify(china_origin). 
+sichuan_noodle :- noodle, 
+             verify(china_origin). 
+kebab :- eastern,
+               verify(use_wrap), 
+               verify(contain_meat). 
+biryani :- eastern, 
+                 verify(contain_meat), 
+                 verify(has_rice), 
+                 verify(heavy_portion). 
+falafel :- eastern, 
+                   verify(meatballlike_shape), 
+                   verify(has_veggies). 
+crossoint :- western, 
+                   verify(pastry), 
+                   verify(french_origin). 
+baguette :- western,
+                    verify(bread),
+                    verify(french_origin).
+penne :- western,
+                 verify(taste_spicy),
+                 verify(italian_origin).
+
+/* classification rules */ 
+
+asian :- verify(taste_spicy), !. 
+asian :- verify(use_rice). 
+eastern :- verify(has_meat), !. 
+eastern :- verify(use_spice), 
+           verify(not_spicy). 
+rice :- verify(contain_carbohydrate), !. 
+rice :- verify(dry_texture), 
+                    verify(heavy_portion), 
+                    verify(need_to_be_cooked). 
+noodle :- asian, verify(stringlike_shape), !. 
+noodle :- asian, verify(heavy_portion). 
+western :- verify(sweet_n_savoury). 
+western :- verify(contain_sauce). 
+
+
+
+
